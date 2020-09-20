@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Models;
-
 
 use App\Traits\SlugMappingTrait;
 use Illuminate\Database\Eloquent\Model;
@@ -11,6 +9,7 @@ use Illuminate\Support\Str;
 class Category extends Model
 {
     use SlugMappingTrait;
+
     protected $table = 'categories';
 
     protected $guarded = [

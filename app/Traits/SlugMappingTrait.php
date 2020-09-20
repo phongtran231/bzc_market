@@ -10,7 +10,7 @@ trait SlugMappingTrait
 {
     public function slug(): HasOne
     {
-        return $this->hasOne(SlugMapping::class);
+        return $this->hasOne(SlugMapping::class, 'object_id' ,'id');
     }
 
     protected static function savedSlug($item)
@@ -24,7 +24,7 @@ trait SlugMappingTrait
         );
         $item->slug()->save($slug);
     }
-    
+
     protected static function updatedSlug($item)
     {
         $item->slug()->update(
