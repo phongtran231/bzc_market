@@ -2,11 +2,12 @@
 
 namespace Modules\Backend\Providers;
 
-use App\Providers\AppServiceProvider;
+use Illuminate\Support\ServiceProvider;
 use Modules\Backend\Services\Test\TestService;
 use Modules\Backend\Services\Test\TestServiceInterface;
 
-class MappingServiceProvider extends AppServiceProvider
+
+class MappingServiceProvider extends ServiceProvider
 {
     public function boot()
     {

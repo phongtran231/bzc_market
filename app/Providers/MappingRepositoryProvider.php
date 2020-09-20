@@ -2,10 +2,11 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\ServiceProvider;
 use App\Repositories\Test\TestRepository;
 use App\Repositories\Test\TestRepositoryInterface;
 
-class MappingRepositoryProvider extends AppServiceProvider
+class MappingRepositoryProvider extends ServiceProvider
 {
     public function boot()
     {
