@@ -2,3 +2,4 @@
 .idea
 storage/framework/cache
 storage/logs/
+vendor/
