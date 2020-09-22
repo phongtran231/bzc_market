@@ -4,7 +4,7 @@ namespace Modules\Backend\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ShopOwnerStoreRequest extends FormRequest
+class StoreShopOwnerRequest extends FormRequest
 {
     public function rules(): array
     {

@@ -12,6 +12,12 @@ class ShopOwner extends Authenticatable implements JWTSubject
 
     protected $table = 'shop_owners';
 
+    protected $guarded = [
+        'id',
+        'active',
+        'password'
+    ];
+
     protected $hidden = [
         'password', 'remember_token',
     ];

@@ -3,7 +3,6 @@
 namespace Modules\Backend\Services\ShopOwner;
 
 use App\Repositories\ShopOwner\ShopOwnerRepositoryInterface;
-use Illuminate\Support\Facades\Request;
 use Modules\Backend\Services\BaseService;
 
 /**
@@ -16,13 +15,16 @@ class ShopOwnerService extends BaseService implements ShopOwnerServiceInterface
     /**
      * @var ShopOwnerRepositoryInterface
      */
-    protected $shopOwnerRepository;
+    protected $_shopOwnerRepository;
+
+    protected $_auth;
 
     public function __construct(
         ShopOwnerRepositoryInterface $shopOwnerRepository
     )
     {
-        $this->shopOwnerRepository = $shopOwnerRepository;
+        $this->_shopOwnerRepository = $shopOwnerRepository;
+        $this->_auth = auth('shop_owner');
     }
 
     /**
@@ -30,30 +32,15 @@ class ShopOwnerService extends BaseService implements ShopOwnerServiceInterface
      */
     public function getInfo()
     {
-        return $this->shopOwnerRepository->find(auth()->guard('api')->id());
+        return $this->_auth->user();
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function update(Request $attrs)
+    public function store(array $attributes)
     {
-
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function save(Request $attrs)
-    {
-        // TODO: Implement save() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function destroy(int $id)
-    {
-        // TODO: Implement destroy() method.
+        try {
+            return $this->_shopOwnerRepository->create($attributes);
+        } catch (\Exception $e) {
+            return false;
+        }
     }
 }
