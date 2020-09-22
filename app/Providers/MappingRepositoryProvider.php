@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use App\Repositories\Category\CategoryRepository;
 use App\Repositories\Category\CategoryRepositoryInterface;
+use App\Repositories\CoreConfig\CoreConfigRepository;
+use App\Repositories\CoreConfig\CoreConfigRepositoryInterface;
 use App\Repositories\Product\ProductRepository;
 use App\Repositories\Product\ProductRepositoryInterface;
 use App\Repositories\ProductAttribute\ProductAttributeRepository;
@@ -29,5 +31,6 @@ class MappingRepositoryProvider extends ServiceProvider
         $this->app->singleton(CategoryRepositoryInterface::class, CategoryRepository::class);
         $this->app->singleton(SlugMappingRepositoryInterface::class, SlugMappingMappingRepository::class);
         $this->app->singleton(ShopOwnerRepositoryInterface::class, ShopOwnerRepository::class);
+        $this->app->singleton(CoreConfigRepositoryInterface::class, CoreConfigRepository::class);
     }
 }

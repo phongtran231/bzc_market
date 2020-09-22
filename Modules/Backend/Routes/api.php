@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +13,20 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/backend', function (Request $request) {
-    return $request->user();
+Route::group([
+    'prefix' => 'bzc-admin-manager',
+    'namespace' => 'Api\Admin'
+], function () {
+    Route::post('login', 'AuthController@login')->name('admin.login');
+    Route::post('reset-password', 'AuthController@forgetPassword')->name('admin.reset-password');
+
+    /**
+     * Auth router
+     */
+
+    Route::get('get-user-profile', 'AuthController@getUserProfile')->name('admin.get-user-profile');
+
+    /**
+     * End auth router
+     */
 });
