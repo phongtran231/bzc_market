@@ -42,12 +42,12 @@ return [
         ],
 
         'shop_owner' => [
-            'driver' => 'session',
+            'driver' => 'jwt',
             'provider' => 'shop_owners'
         ],
 
         'admin' => [
-            'driver' => 'session',
+            'driver' => 'jwt',
             'provider' => 'admins',
         ],
 
