@@ -2,17 +2,14 @@
 
 namespace Modules\Backend\Providers;
 
-use Illuminate\Support\ServiceProvider;
-use Modules\Backend\Services\CoreConfig\CoreConfigService;
-use Modules\Backend\Services\CoreConfig\CoreConfigServiceInterface;
-use Modules\Backend\Services\ShopOwner\ShopOwnerService;
-use Modules\Backend\Services\ShopOwner\ShopOwnerServiceInterface;
+use App\Providers\AppServiceProvider;
+use Modules\Backend\Services\Test\TestService;
+use Modules\Backend\Services\Test\TestServiceInterface;
 
-class MappingServiceProvider extends ServiceProvider
+class MappingServiceProvider extends AppServiceProvider
 {
     public function boot()
     {
-        $this->app->singleton(ShopOwnerServiceInterface::class, ShopOwnerService::class);
-        $this->app->singleton(CoreConfigServiceInterface::class, CoreConfigService::class);
+        $this->app->singleton(TestServiceInterface::class, TestService::class);
     }
 }
