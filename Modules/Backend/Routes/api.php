@@ -33,7 +33,14 @@ Route::group([
         Route::get('paginate', 'CoreConfigController@getCoreConfigPaginate')->name('admin.core-config.paginate');
         Route::get('{id}', 'CoreConfigController@show');
     });
+
+    Route::group([
+        'prefix' => 'shop-owner'
+     ], function () {
+       Route::post('/', 'ShopOwnerController@store');
+    });
     /**
      * End auth router
      */
+
 });
