@@ -15,17 +15,24 @@ use Illuminate\Support\Facades\Route;
 
 Route::group([
     'prefix' => 'bzc-admin-manager',
-    'namespace' => 'Api\Admin'
+    'namespace' => 'Api'
 ], function () {
-    Route::post('login', 'AuthController@login')->name('admin.login');
-    Route::post('reset-password', 'AuthController@forgetPassword')->name('admin.reset-password');
+    Route::post('login', 'Admin\AuthController@login')->name('admin.login');
+    Route::post('reset-password', 'Admin\AuthController@forgetPassword')->name('admin.reset-password');
 
     /**
      * Auth router
      */
 
-    Route::get('get-user-profile', 'AuthController@getUserProfile')->name('admin.get-user-profile');
+    Route::get('get-user-profile', 'Admin\AuthController@getUserProfile')->name('admin.get-user-profile');
 
+    Route::group([
+        'prefix' => 'core-config',
+    ], function () {
+        Route::get('/', 'CoreConfigController@index')->name('admin.core-config.index');
+        Route::get('paginate', 'CoreConfigController@getCoreConfigPaginate')->name('admin.core-config.paginate');
+        Route::get('{id}', 'CoreConfigController@show');
+    });
     /**
      * End auth router
      */
