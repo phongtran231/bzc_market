@@ -8,6 +8,9 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class ShopOwner extends Authenticatable implements JWTSubject
 {
+
+    const GUARD_NAME = 'shop_owner';
+
     use Notifiable;
 
     protected $table = 'shop_owners';
