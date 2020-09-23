@@ -63,8 +63,8 @@ class Handler extends ExceptionHandler
     protected function invalidJson($request, ValidationException $exception)
     {
         return response()->json([
-            'message' => 'Dữ liệu không đúng',
-            'errors' => $exception->validator->getMessageBag(),
+            'data' => $exception->validator->getMessageBag(),
+            'error' => true,
         ], Response::HTTP_BAD_REQUEST);
     }
 }

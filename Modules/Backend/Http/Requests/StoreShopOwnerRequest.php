@@ -1,17 +1,24 @@
 <?php
 
-namespace Modules\Backend\Requests;
+namespace Modules\Backend\Http\Requests;
 
+use App\Models\Admin;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreShopOwnerRequest extends FormRequest
 {
+
+    public function authorize()
+    {
+        return auth(Admin::GUARD_NAME)->check();
+    }
+
     public function rules(): array
     {
         return [
             'full_name' => [
                 'string',
-                'max:100'
+                'required',
             ],
             'phone' => [
                 'required',
@@ -33,7 +40,7 @@ class StoreShopOwnerRequest extends FormRequest
     {
         return [
             'full_name.string' => 'Vui lòng nhập đúng họ tên',
-            'full_name.max' => 'Họ và tên giới hạn 100 ký tự',
+            'full_name.required' => 'Họ và tên không được để trống',
             'phone.required' => 'Số điện thoại cần khai báo',
             'phone.numeric' => 'Số điện thoại chỉ nhập số',
             'phone.unique' => 'Đã có người đăng ký bằng số điện thoại này',

@@ -1,11 +1,17 @@
 <?php
 
-namespace Modules\Backend\Requests;
+namespace Modules\Backend\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AdminResetPasswordRequest extends FormRequest
+class AdminForgetPasswordRequest extends FormRequest
 {
+
+    public function authorize()
+    {
+        return true;
+    }
+
     /**
      * @return array
      */

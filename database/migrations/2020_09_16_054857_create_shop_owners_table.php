@@ -18,6 +18,9 @@ class CreateShopOwnersTable extends Migration
             $table->string('full_name', 100)->nullable()->index();
             $table->string('phone', 20)->unique();
             $table->string('email', 100)->unique();
+            $table->integer('city_id')->nullable()->index();
+            $table->integer('district_id')->nullable()->index();
+            $table->integer('ward_id')->nullable()->index();
             $table->string('address')->nullable();
             $table->string('password', 60)->nullable();
             $table->rememberToken();

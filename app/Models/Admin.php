@@ -4,10 +4,16 @@ namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Traits\HasRoles;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class Admin extends Authenticatable implements JWTSubject
 {
+
+    use HasRoles;
+
+    const GUARD_NAME = 'admin';
+
     use Notifiable;
 
     protected $table = 'admins';

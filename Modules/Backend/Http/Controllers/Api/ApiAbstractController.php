@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 abstract class ApiAbstractController extends Controller
 {
-    protected function responseSuccess($data, $status = Response::HTTP_OK)
+    protected function _responseSuccess($data, $status = Response::HTTP_OK)
     {
         return response()->json([
             'data' => $data,
@@ -15,11 +15,23 @@ abstract class ApiAbstractController extends Controller
         ], $status);
     }
 
-    protected function responseError(string $message = "Lỗi", $status = Response::HTTP_BAD_REQUEST)
+    protected function _responseError($message = "Lỗi", $status = Response::HTTP_BAD_REQUEST)
     {
         return response()->json([
             'data' => $message,
             'error' => true,
         ], $status);
+    }
+
+    /**
+     * @param array $response
+     * @return \Illuminate\Http\JsonResponse
+     */
+    protected function _returnResponse(array $response)
+    {
+        if ($response['error']) {
+            return $this->_responseError($response['data']);
+        }
+        return $this->_responseSuccess($response['data']);
     }
 }

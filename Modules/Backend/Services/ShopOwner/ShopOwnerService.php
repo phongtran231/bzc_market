@@ -2,14 +2,11 @@
 
 namespace Modules\Backend\Services\ShopOwner;
 
+use App\Models\ShopOwner;
 use App\Repositories\ShopOwner\ShopOwnerRepositoryInterface;
+use Modules\Backend\Events\ShopOwner\CreatedShopOwnerEvent;
 use Modules\Backend\Services\BaseService;
 
-/**
- * Class ShopOwnerService
- * @package Modules\Backend\Services\ShopOwner
- * @author S5K (s5k.github.io)
- */
 class ShopOwnerService extends BaseService implements ShopOwnerServiceInterface
 {
     /**
@@ -27,20 +24,65 @@ class ShopOwnerService extends BaseService implements ShopOwnerServiceInterface
         $this->_auth = auth('shop_owner');
     }
 
+    public function index(array $select = ['*'], bool $paginate = true, int $perPage = 20)
+    {
+        if ($paginate) {
+            $response = $this->_shopOwnerRepository->simplePaginate($perPage, $select);
+        } else {
+            $response = $this->_shopOwnerRepository->all($select);
+        }
+        return $this->_setResponseSuccess($response)->_getResponseSuccess();
+    }
+
     /**
-     * @inheritDoc
+     * @return \App\Models\ShopOwner|array
      */
     public function getInfo()
     {
-        return $this->_auth->user();
+        return $this->_setResponseSuccess($this->_auth->user())->_getResponseSuccess();
     }
 
+    /**
+     * @param array $attributes
+     * @return array|mixed
+     */
     public function store(array $attributes)
     {
         try {
-            return $this->_shopOwnerRepository->create($attributes);
+            $response = $this->_shopOwnerRepository->create($attributes);
+            event(new CreatedShopOwnerEvent($response));
+            return $this->_setResponseSuccess($response)->_getResponseSuccess();
         } catch (\Exception $e) {
-            return false;
+            return $this->_setResponseError($e->getMessage())->_getResponseError();
         }
+    }
+
+    /**
+     * @param int $id
+     * @return array
+     */
+    public function show(int $id)
+    {
+        return $this->_setResponseSuccess($this->_shopOwnerRepository->find($id))->_getResponseSuccess();
+    }
+
+    /**
+     * @param array $attributes
+     * @param ShopOwner $shopOwner
+     * @return array
+     */
+    public function resetPassword(array $attributes, $shopOwner)
+    {
+        $userMail = $attributes['user_mail'];
+        $userMail = decrypt($userMail);
+
+        if ($userMail != $shopOwner->email) {
+            return $this->_setResponseError("Mã bảo mật không đúng")->_getResponseError();
+        }
+
+        $password = bcrypt($attributes['new_password']);
+        $shopOwner->password = $password;
+        $shopOwner->save();
+        return $this->_setResponseSuccess($shopOwner)->_getResponseSuccess();
     }
 }
