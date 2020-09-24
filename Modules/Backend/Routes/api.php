@@ -21,20 +21,27 @@ Route::group([
 
         Route::get('get-user-profile', 'Admin\AuthController@getUserProfile')->name('admin.get-user-profile');
         /** Core config */
-        Route::resource('core-config', 'CoreConfigController')->names('admin.core-config')->except($defaultExcept);
+        Route::resource('core-config', 'CoreConfigController')->names('admin.core-config')->except($defaultExcept)->middleware(['role:super-admin', 'permission:product-category.*']);
 
         /** ACL */
         Route::group([
             'prefix' => 'permission-role',
-            'namespace' => 'Admin'
+            'namespace' => 'Admin',
+            'middleware' => 'role:super-admin'
         ], function () {
-            Route::post('create-role', 'ACLController@createRole')->name('admin.acl.create-role')->middleware(['role:super_admin']);
-            Route::post('create-permission', 'ACLController@createPermission')->name('admin.acl.create-permission')->middleware('role:super_admin');
-            Route::post('set-role-for-admin', 'ACLController@setRoleForAdmin')->name('admin.acl.set-role-for-admin')->middleware('role:super_admin');
+            Route::post('create-role', 'ACLController@createRole')->name('admin.acl.create-role');
+            Route::post('create-permission', 'ACLController@createPermission')->name('admin.acl.create-permission');
+            Route::post('set-role-for-admin', 'ACLController@setRoleForAdmin')->name('admin.acl.set-role-for-admin');
         });
 
+        /** Product Category */
+
+        Route::resource('product-category', 'ProductCategoryController')->names('admin.product-category')->except($defaultExcept)->middleware('role:super-admin');
+
         /** Shop Owner */
-        Route::resource('shop-owner', 'ShopOwnerController')->names('admin.shop-owner')->except($defaultExcept);
+        Route::resource('shop-owner', 'ShopOwnerController')->names('admin.shop-owner')->except($defaultExcept)->middleware('role:super-admin');
+
+
 //        Route::post('shop-owner/{token}/reset-password', 'ShopOwnerController@resetPassword');
         // TODO: đem route đổi mật khẩu shop owner qua module ShopOwner
     });
