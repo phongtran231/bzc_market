@@ -36,7 +36,10 @@ Route::group([
 
         /** Product Category */
 
-        Route::resource('product-category', 'ProductCategoryController')->names('admin.product-category')->except($defaultExcept)->middleware('role:super-admin');
+//        Route::resource('product-category', 'ProductCategoryController')->names('admin.product-category')->except($defaultExcept)->middleware('role:super-admin');
+
+        /** Product */
+        Route::resource('product', 'ProductController')->names('admin.product')->except($defaultExcept)->middleware('role_or_permission:super-admin|product.*');
 
         /** Shop Owner */
         Route::resource('shop-owner', 'ShopOwnerController')->names('admin.shop-owner')->except($defaultExcept)->middleware('role:super-admin');
