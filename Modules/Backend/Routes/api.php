@@ -25,7 +25,7 @@ Route::group([
             'prefix' => 'core-config',
         ], function () {
             Route::get('/', 'CoreConfigController@index')->name('admin.core-config.index')->middleware('role_or_permission:super-admin|admin-core-config.index');
-            Route::post('/', 'CoreConfigController@store')->name('admin.core-config.store')->middleware('role_or_permission:super-admin|admin-core-config.index');
+            Route::post('/', 'CoreConfigController@store')->name('admin.core-config.store')->middleware('role_or_permission:super-admin|admin-core-config.store');
             Route::put('{core_config}', 'CoreConfigController@update')->name('admin.core-config.update')->middleware('role_or_permission:super-admin|admin-core-config.update');
             Route::delete('{core_config}', 'CoreConfigController@destroy')->name('admin.core-config.destroy')->middleware('role_or_permission:super-admin|admin-core-config.destroy');
         });
@@ -46,12 +46,20 @@ Route::group([
             'prefix' => 'product-category',
         ], function () {
             Route::get('/', 'ProductCategoryController@index')->name('admin.product-category.index')->middleware('role_or_permission:super-admin|admin-product-category.index');
+            Route::post('/', 'ProductCategoryController@store')->name('admin.product-category.store')->middleware('role_or_permission:super-admin|admin-product-category.store');
+            Route::put('{product_category}', 'ProductCategoryController@update')->name('admin.product-category.update')->middleware('role_or_permission:super-admin|admin-product-category.update');
+            Route::delete('{product_category}', 'ProductCategoryController@destroy')->name('admin.product-category.destroy')->middleware('role_or_permission:super-admin|admin-product-category.destroy');
         });
-        Route::resource('product-category', 'ProductCategoryController')->names('admin.product-category')
-            ->except($defaultExcept)->middleware('role_or_permission:super-admin|product-category.*');
 
         /** Product */
-        Route::resource('product', 'ProductController')->names('admin.product')->except($defaultExcept)->middleware('role_or_permission:super-admin|product.*');
+        Route::group([
+            'prefix' => 'product'
+        ], function () {
+            Route::get('/', 'ProductController@index')->name('admin.product.index')->middleware('role_or_permission:super-admin|admin-product.index');
+            Route::post('/', 'ProductController@store')->name('admin.product.store')->middleware('role_or_permission:super-admin|admin-product.store');
+            Route::put('{product_category}', 'ProductController@update')->name('admin.product.update')->middleware('role_or_permission:super-admin|admin-product.update');
+            Route::delete('{product_category}', 'ProductController@destroy')->name('admin.product.destroy')->middleware('role_or_permission:super-admin|admin-product.destroy');
+        });
 
         /** Shop Owner */
         Route::resource('shop-owner', 'ShopOwnerController')->names('admin.shop-owner')->except($defaultExcept)->middleware('role:super-admin');
