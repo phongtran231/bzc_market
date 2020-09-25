@@ -5,7 +5,7 @@ namespace Modules\Backend\Http\Requests;
 use App\Models\Admin;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateProductCategoryRequest extends FormRequest
+class StoreProductAttributeGroupRequest extends FormRequest
 {
     public function authorize()
     {
@@ -15,9 +15,9 @@ class UpdateProductCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => [
+            'group_name' => [
                 'required',
-                'unique:product_categories,title' . request('product_category') . ',id',
+                'unique:product_attribute_groups,group_name',
             ],
         ];
     }
@@ -25,8 +25,8 @@ class UpdateProductCategoryRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'title.required' => 'Tiêu đề không được để trống',
-            'title.unique' => 'Tiêu đề đã tồn tại',
+            'group_name.required' => 'Tên nhóm cấu hình không được để trống',
+            'group_name.unique' => 'Tên nhóm cấu hình đã tồn tại',
         ];
     }
 }

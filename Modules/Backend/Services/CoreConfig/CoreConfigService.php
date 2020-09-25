@@ -46,9 +46,10 @@ class CoreConfigService extends BaseService implements CoreConfigServiceInterfac
 
     /**
      * @param int $id
-     * @return mixed
+     * @param array|null $with
+     * @return array
      */
-    public function show(int $id)
+    public function show(int $id, array $with = null)
     {
         return $this->_setResponseSuccess($this->_coreConfigRepository->find($id))->_getResponseSuccess();
     }
