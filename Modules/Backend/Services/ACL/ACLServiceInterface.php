@@ -2,6 +2,7 @@
 
 namespace Modules\Backend\Services\ACL;
 
+use Modules\Backend\Http\Requests\SetRoleForAdminRequest;
 use Modules\Backend\Services\BaseServiceInterface;
 
 interface ACLServiceInterface extends BaseServiceInterface
@@ -17,4 +18,10 @@ interface ACLServiceInterface extends BaseServiceInterface
      * @return array
      */
     public function createPermission(array $attributes): array;
+
+    /**
+     * @param array $attributes
+     * @return array
+     */
+    public function setRoleForAdmin(array $attributes): array ;
 }

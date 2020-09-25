@@ -6,5 +6,10 @@ use Prettus\Repository\Contracts\RepositoryInterface;
 
 interface BaseRepositoryInterface extends RepositoryInterface
 {
-
+    /**
+     * @param array $where
+     * @param array $columns
+     * @return mixed
+     */
+    public function firstWhere(array $where, array $columns = ['*']);
 }

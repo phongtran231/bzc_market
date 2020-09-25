@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Repositories\Admin\AdminRepository;
+use App\Repositories\Admin\AdminRepositoryInterface;
 use App\Repositories\Category\CategoryRepository;
 use App\Repositories\Category\CategoryRepositoryInterface;
 use App\Repositories\CoreConfig\CoreConfigRepository;
@@ -38,5 +40,6 @@ class MappingRepositoryProvider extends ServiceProvider
         $this->app->singleton(CoreConfigRepositoryInterface::class, CoreConfigRepository::class);
         $this->app->singleton(RoleRepositoryInterface::class, RoleRepository::class);
         $this->app->singleton(PermissionRepositoryInterface::class, PermissionRepository::class);
+        $this->app->singleton(AdminRepositoryInterface::class, AdminRepository::class);
     }
 }
