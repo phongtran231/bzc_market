@@ -14,11 +14,10 @@ class CreateProductCategoryAttributeGroupMappingsTable extends Migration
     public function up()
     {
         Schema::create('product_category_attribute_group_mappings', function (Blueprint $table) {
-            $table->id();
-            $table->bigInteger('product_category_id')->index();
-            $table->bigInteger('product_attribute_group_id')->index();
-            $table->timestamps();
+            $table->bigInteger('product_category_id')->index('product_category_index');
+            $table->bigInteger('product_attribute_group_id')->index('product_attribute_group_index');
         });
+        \Illuminate\Support\Facades\DB::statement('alter table `product_category_attribute_group_mappings` comment "mapping product_categories and product_attribute_groups"');
     }
 
     /**

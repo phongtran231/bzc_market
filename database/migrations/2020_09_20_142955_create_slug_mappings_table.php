@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSlugMappingTable extends Migration
+class CreateSlugMappingsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,10 @@ class CreateSlugMappingTable extends Migration
      */
     public function up()
     {
-        Schema::create('slug_mapping', function (Blueprint $table) {
-            $table->id();
+        Schema::create('slug_mappings', function (Blueprint $table) {
             $table->string('slug')->unique();
             $table->string('object')->index();
             $table->bigInteger('object_id')->index();
-            $table->timestamps();
         });
     }
 
@@ -29,6 +27,6 @@ class CreateSlugMappingTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('slug_mapping');
+        Schema::dropIfExists('slug_mappings');
     }
 }

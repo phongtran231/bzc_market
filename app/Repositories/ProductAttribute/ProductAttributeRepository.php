@@ -6,7 +6,7 @@ use App\Models\ProductAttribute;
 use App\Repositories\BaseRepository;
 use App\Repositories\ProductCategory\ProductCategoryRepositoryInterface;
 
-class ProductAttributeRepository extends BaseRepository implements ProductCategoryRepositoryInterface
+class ProductAttributeRepository extends BaseRepository implements ProductAttributeRepositoryInterface
 {
 
     public function model()

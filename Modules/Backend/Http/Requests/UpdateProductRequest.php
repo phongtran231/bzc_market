@@ -24,7 +24,7 @@ class UpdateProductRequest extends FormRequest
             ],
             "title" => [
                 "string",
-                "unique:products,title," . request('product'). ",id",
+                "unique:products,title," . request('product') . ",id",
             ],
             "des" => [
                 "string",

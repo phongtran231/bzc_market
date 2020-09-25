@@ -7,7 +7,12 @@ use Symfony\Component\HttpFoundation\Response;
 
 abstract class ApiAbstractController extends Controller
 {
-    protected function _responseSuccess($data, $status = Response::HTTP_OK)
+    /**
+     * @param $data
+     * @param int $status
+     * @return \Illuminate\Http\JsonResponse
+     */
+    protected function _responseSuccess($data, int $status = Response::HTTP_OK)
     {
         return response()->json([
             'data' => $data,
@@ -15,7 +20,12 @@ abstract class ApiAbstractController extends Controller
         ], $status);
     }
 
-    protected function _responseError($message = "Lỗi", $status = Response::HTTP_BAD_REQUEST)
+    /**
+     * @param string $message
+     * @param int $status
+     * @return \Illuminate\Http\JsonResponse
+     */
+    protected function _responseError($message = "Lỗi", int $status = Response::HTTP_BAD_REQUEST)
     {
         return response()->json([
             'data' => $message,
@@ -25,13 +35,14 @@ abstract class ApiAbstractController extends Controller
 
     /**
      * @param array $response
+     * @param int $status
      * @return \Illuminate\Http\JsonResponse
      */
-    protected function _returnResponse(array $response)
+    protected function _returnResponse(array $response, int $status = Response::HTTP_OK)
     {
         if ($response['error']) {
-            return $this->_responseError($response['data']);
+            return $this->_responseError($response['data'], Response::HTTP_BAD_REQUEST);
         }
-        return $this->_responseSuccess($response['data']);
+        return $this->_responseSuccess($response['data'], $status);
     }
 }

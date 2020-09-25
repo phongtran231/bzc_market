@@ -16,4 +16,10 @@ abstract class BaseRepository extends AbstractRepository implements BaseReposito
     {
         return $this->findWhere($where, $columns)->first();
     }
+
+    public function groupBy($column)
+    {
+        $this->model = $this->model->groupBy($column);
+        return $this;
+    }
 }

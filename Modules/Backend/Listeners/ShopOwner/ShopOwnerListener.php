@@ -16,7 +16,7 @@ class ShopOwnerListener implements BaseListenerInterface
      * thêm password cho shop owner
      * @param CreatedShopOwnerEvent $event
      */
-    public function createdShopOwner(CreatedShopOwnerEvent $event)
+    public function created(CreatedShopOwnerEvent $event)
     {
         $shopOwner = $event->model;
         $password = Str::random(30);
@@ -29,11 +29,10 @@ class ShopOwnerListener implements BaseListenerInterface
         ]));
     }
 
-    public function subscribe($event)
+    public function subscribe(Dispatcher $event)
     {
-        /** @var Dispatcher $event */
         $event->listen(
             CreatedShopOwnerEvent::class,
-            static::class.'@createdShopOwner');
+            static::class.'@created');
     }
 }

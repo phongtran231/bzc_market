@@ -10,6 +10,12 @@ class ProductAttributeGroupMapping extends Model
 
     protected $table = "product_attribute_group_mappings";
 
+    public $timestamps = false;
+
+    protected $primaryKey = null;
+
+    public $incrementing = false;
+
     public function productAttribute()
     {
         return $this->belongsTo(ProductAttribute::class, 'product_attribute_id', 'id');

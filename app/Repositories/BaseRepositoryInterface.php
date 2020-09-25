@@ -12,4 +12,10 @@ interface BaseRepositoryInterface extends RepositoryInterface
      * @return mixed
      */
     public function firstWhere(array $where, array $columns = ['*']);
+
+    /**
+     * @param $column
+     * @return $this
+     */
+    public function groupBy($column);
 }
