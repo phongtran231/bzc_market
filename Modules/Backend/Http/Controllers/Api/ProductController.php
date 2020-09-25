@@ -21,7 +21,7 @@ class ProductController extends ApiAbstractController implements ResourceInterfa
     {
         $this->_productService = $productService;
     }
-    
+
     public function index(Request $request)
     {
         $limit = $request->input('limit') ?? 0;
@@ -48,6 +48,6 @@ class ProductController extends ApiAbstractController implements ResourceInterfa
 
     public function destroy($id)
     {
-        return $this->_returnResponse($this->_productService->delete($id));
+        return $this->_returnResponse($this->_productService->destroy($id));
     }
 }

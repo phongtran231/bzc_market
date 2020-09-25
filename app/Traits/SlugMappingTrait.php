@@ -15,14 +15,18 @@ trait SlugMappingTrait
 
     protected static function savedSlug($item)
     {
-        $slug = new SlugMapping(
-            [
-                'slug' => Str::slug($item->title),
-                'object' => static::class,
-                'object_id' => $item->id,
-            ]
-        );
-        $item->slug()->save($slug);
+        $data = [
+            'object' => static::class,
+            'object_id' => $item->id,
+        ];
+        $slug = SlugMapping::where($data)->first();
+        if (!$slug) {
+            $slug = new SlugMapping(array_merge($data, ['slug' => Str::slug($item->title)]));
+            $item->slug()->save($slug);
+        } else {
+            $slug->slug = Str::slug($item->title);
+            $slug->save();
+        }
     }
 
     protected static function updatedSlug($item)

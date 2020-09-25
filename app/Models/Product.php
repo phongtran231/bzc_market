@@ -14,4 +14,17 @@ class Product extends Model
     protected $guarded = [
         'id'
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::saved(function ($item) {
+            static::savedSlug($item);
+        });
+
+        static::updated(function ($item) {
+            static::updatedSlug($item);
+        });
+    }
 }

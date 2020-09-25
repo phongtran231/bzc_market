@@ -37,7 +37,7 @@ class StoreCoreConfigRequest extends FormRequest
             'key_name.required' => 'Thiếu tên cấu hình',
             'key_name.unique' => 'Tên cấu hình đã tồn tại',
             'key_name.string' => 'Tên cấu hình phải là chữ',
-            'key_name.min' => 'Tên cấu hình quá ngắn'
+            'key_name.min' => 'Tên cấu hình quá ngắn',
         ];
     }
 }

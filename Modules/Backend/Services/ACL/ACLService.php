@@ -3,9 +3,11 @@
 namespace Modules\Backend\Services\ACL;
 
 use App\Models\Admin;
+use App\Repositories\Admin\AdminRepositoryInterface;
 use App\Repositories\Permission\PermissionRepositoryInterface;
 use App\Repositories\Role\RoleRepositoryInterface;
 use GuzzleHttp\Psr7\Request;
+use Modules\Backend\Http\Requests\SetRoleForAdminRequest;
 use Modules\Backend\Services\BaseService;
 
 class ACLService extends BaseService implements ACLServiceInterface
@@ -21,20 +23,28 @@ class ACLService extends BaseService implements ACLServiceInterface
     protected $_permissionRepository;
 
     /**
+     * @var AdminRepositoryInterface
+     */
+    protected $_adminRepository;
+
+    /**
      * ACLService constructor.
      * @param RoleRepositoryInterface $roleRepository
      * @param PermissionRepositoryInterface $permissionRepository
+     * @param AdminRepositoryInterface $adminRepository
      */
     public function __construct(
         RoleRepositoryInterface $roleRepository,
-        PermissionRepositoryInterface $permissionRepository
+        PermissionRepositoryInterface $permissionRepository,
+        AdminRepositoryInterface $adminRepository
     )
     {
         $this->_roleRepository = $roleRepository;
         $this->_permissionRepository = $permissionRepository;
+        $this->_adminRepository = $adminRepository;
     }
 
-    public function index(array $select = ['*'], bool $paginate = true, int $perPage = 20)
+    public function index(array $select = ['*'], bool $paginate = true, int $perPage = 20, array $with = null)
     {
         // TODO: Implement index() method.
     }
@@ -79,7 +89,38 @@ class ACLService extends BaseService implements ACLServiceInterface
         }
     }
 
-    public function setRoleForAdmin(Request $request)
+    /**
+     * @param array $attributes
+     * @return array
+     */
+    public function setRoleForAdmin(array $attributes): array
+    {
+        $admin = $this->_adminRepository->firstWhere(['user_name' => $attributes['admin_name']]);
+        $admin->assignRole($attributes['role_name']);
+        return $this->_setResponseSuccess('Thêm role thành công')->_getResponseSuccess();
+    }
+
+    public function store(array $attributes)
+    {
+
+    }
+
+    public function update(array $attributes, int $id)
+    {
+
+    }
+
+    public function show(int $id, array $with = null)
+    {
+
+    }
+
+    public function destroy(int $id)
+    {
+
+    }
+
+    protected function _setRelation(array $with = null)
     {
 
     }

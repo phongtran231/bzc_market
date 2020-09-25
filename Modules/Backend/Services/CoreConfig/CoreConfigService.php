@@ -28,10 +28,14 @@ class CoreConfigService extends BaseService implements CoreConfigServiceInterfac
      * @param array $select
      * @param bool $paginate
      * @param int $perPage
-     * @return mixed
+     * @param array|null $with
+     * @return array
      */
-    public function index(array $select = ['*'], bool $paginate = true, int $perPage = 20)
+    public function index(array $select = ['*'], bool $paginate = true, int $perPage = 20, array $with = null)
     {
+        if ($with) {
+            $this->_coreConfigRepository = $this->_coreConfigRepository->with($with);
+        }
         if ($paginate) {
             $data = $this->_coreConfigRepository->simplePaginate($perPage, $select);
         } else {
@@ -63,18 +67,9 @@ class CoreConfigService extends BaseService implements CoreConfigServiceInterfac
         }
     }
 
-    /**
-     * @param array $attributes
-     * @param int $id
-     * @return bool|mixed
-     */
-    public function update(array $attributes, $id)
+    public function update(array $attributes, int $id)
     {
-        try {
-            return $this->_setResponseSuccess($this->_coreConfigRepository->update($attributes, $id))->_getResponseSuccess();
-        } catch (\Exception $e) {
-            return $this->_setResponseError($e->getMessage())->_getResponseError();
-        }
+        return $this->_setResponseSuccess($this->_coreConfigRepository->update($attributes, $id))->_getResponseSuccess();
     }
 
     /**
@@ -84,5 +79,10 @@ class CoreConfigService extends BaseService implements CoreConfigServiceInterfac
     public function destroy(int $id)
     {
         return $this->_setResponseSuccess($this->_coreConfigRepository->delete($id))->_getResponseSuccess();
+    }
+
+    protected function _setRelation(array $with = null)
+    {
+
     }
 }

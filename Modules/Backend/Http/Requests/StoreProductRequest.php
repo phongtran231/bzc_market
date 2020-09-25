@@ -41,6 +41,9 @@ class StoreProductRequest extends FormRequest
             ],
             "content" => [
                 "string"
+            ],
+            'product_category_id' => [
+                'required',
             ]
         ];
     }

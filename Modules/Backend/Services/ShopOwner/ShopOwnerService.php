@@ -24,8 +24,18 @@ class ShopOwnerService extends BaseService implements ShopOwnerServiceInterface
         $this->_auth = auth('shop_owner');
     }
 
-    public function index(array $select = ['*'], bool $paginate = true, int $perPage = 20)
+    /**
+     * @param array $select
+     * @param bool $paginate
+     * @param int $perPage
+     * @param array|null $with
+     * @return array
+     */
+    public function index(array $select = ['*'], bool $paginate = true, int $perPage = 20, array $with = null)
     {
+        if ($with) {
+            $this->_setRelation($with);
+        }
         if ($paginate) {
             $response = $this->_shopOwnerRepository->simplePaginate($perPage, $select);
         } else {
@@ -59,9 +69,10 @@ class ShopOwnerService extends BaseService implements ShopOwnerServiceInterface
 
     /**
      * @param int $id
+     * @param array|null $with
      * @return array
      */
-    public function show(int $id)
+    public function show(int $id, array $with = null)
     {
         return $this->_setResponseSuccess($this->_shopOwnerRepository->find($id))->_getResponseSuccess();
     }
@@ -84,5 +95,20 @@ class ShopOwnerService extends BaseService implements ShopOwnerServiceInterface
         $shopOwner->password = $password;
         $shopOwner->save();
         return $this->_setResponseSuccess($shopOwner)->_getResponseSuccess();
+    }
+
+    public function update(array $attributes, int $id)
+    {
+
+    }
+
+    protected function _setRelation(array $with = null)
+    {
+        $this->_shopOwnerRepository = $this->_shopOwnerRepository->with($with);
+    }
+
+    public function destroy(int $id)
+    {
+
     }
 }

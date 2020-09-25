@@ -19,7 +19,7 @@ class CreateProductAttributeValuesTable extends Migration
             $table->string('key')->index();
             $table->bigInteger('product_attribute_id')->index();
             $table->bigInteger('product_id')->index();
-            $table->string('value');
+            $table->string('value')->nullable();
             $table->timestamps();
         });
     }

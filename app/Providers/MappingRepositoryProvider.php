@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Repositories\Admin\AdminRepository;
+use App\Repositories\Admin\AdminRepositoryInterface;
 use App\Repositories\Category\CategoryRepository;
 use App\Repositories\Category\CategoryRepositoryInterface;
 use App\Repositories\CoreConfig\CoreConfigRepository;
@@ -12,6 +14,8 @@ use App\Repositories\Product\ProductRepository;
 use App\Repositories\Product\ProductRepositoryInterface;
 use App\Repositories\ProductAttribute\ProductAttributeRepository;
 use App\Repositories\ProductAttribute\ProductAttributeRepositoryInterface;
+use App\Repositories\ProductAttributeGroup\ProductAttributeGroupRepository;
+use App\Repositories\ProductAttributeGroup\ProductAttributeGroupRepositoryInterface;
 use App\Repositories\ProductAttributeValue\ProductAttributeValueRepository;
 use App\Repositories\ProductAttributeValue\ProductAttributeValueRepositoryInterface;
 use App\Repositories\ProductCategory\ProductCategoryRepository;
@@ -38,5 +42,7 @@ class MappingRepositoryProvider extends ServiceProvider
         $this->app->singleton(CoreConfigRepositoryInterface::class, CoreConfigRepository::class);
         $this->app->singleton(RoleRepositoryInterface::class, RoleRepository::class);
         $this->app->singleton(PermissionRepositoryInterface::class, PermissionRepository::class);
+        $this->app->singleton(AdminRepositoryInterface::class, AdminRepository::class);
+        $this->app->singleton(ProductAttributeGroupRepositoryInterface::class, ProductAttributeGroupRepository::class);
     }
 }

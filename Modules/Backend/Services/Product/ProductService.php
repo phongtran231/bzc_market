@@ -3,6 +3,7 @@
 namespace Modules\Backend\Services\Product;
 
 use App\Repositories\Product\ProductRepositoryInterface;
+use Illuminate\Support\Str;
 use Modules\Backend\Services\BaseService;
 
 class ProductService extends BaseService implements ProductServiceInterface
@@ -25,13 +26,17 @@ class ProductService extends BaseService implements ProductServiceInterface
     }
 
     /**
-     * @param array|string[] $select
+     * @param array $select
      * @param bool $paginate
      * @param int $perPage
+     * @param array|null $with
      * @return \App\Models\Product[]|array
      */
-    public function index(array $select = ['*'], bool $paginate = true, int $perPage = 20)
+    public function index(array $select = ['*'], bool $paginate = true, int $perPage = 20, array $with = null)
     {
+        if ($with) {
+            $this->_setRelation($with);
+        }
         if ($paginate) {
             $response = $this->_productRepository->simplePaginate($perPage, $select);
         } else {
@@ -42,10 +47,14 @@ class ProductService extends BaseService implements ProductServiceInterface
 
     /**
      * @param int $id
-     * @return \App\Models\Product|array
+     * @param array|null $with
+     * @return array
      */
-    public function show(int $id)
+    public function show(int $id, array $with = null)
     {
+        if ($with) {
+            $this->_setRelation($with);
+        }
         $data = $this->_productRepository->find($id);
         if ($data) {
             return $this->_setResponseSuccess($data)->_getResponseSuccess();
@@ -60,6 +69,7 @@ class ProductService extends BaseService implements ProductServiceInterface
      */
     public function store(array $attributes)
     {
+        $attributes['uuid'] = Str::uuid();
         $data = $this->_productRepository->create($attributes);
         if ($data) {
             return $this->_setResponseSuccess($data)->_getResponseSuccess();
@@ -87,7 +97,7 @@ class ProductService extends BaseService implements ProductServiceInterface
      * @param int $id
      * @return array|bool
      */
-    public function delete(int $id)
+    public function destroy(int $id)
     {
         $data = $this->_productRepository->delete($id);
         if ($data) {
@@ -95,5 +105,10 @@ class ProductService extends BaseService implements ProductServiceInterface
         }
 
         return $this->_setResponseError('Không thể xóa sản phẩm!')->_getResponseError();
+    }
+
+    protected function _setRelation(array $with = null)
+    {
+        $this->_productRepository = $this->_productRepository->with($with);
     }
 }

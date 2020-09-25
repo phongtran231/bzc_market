@@ -21,7 +21,7 @@ Route::group([
 
         Route::get('get-user-profile', 'Admin\AuthController@getUserProfile')->name('admin.get-user-profile');
         /** Core config */
-        Route::resource('core-config', 'CoreConfigController')->names('admin.core-config')->except($defaultExcept)->middleware(['role:super-admin', 'permission:product-category.*']);
+        Route::resource('core-config', 'CoreConfigController')->names('admin.core-config')->except($defaultExcept)->middleware('role_or_permission:super-admin|core-config.*');
 
         /** ACL */
         Route::group([
@@ -36,14 +36,14 @@ Route::group([
 
         /** Product Category */
 
-//        Route::resource('product-category', 'ProductCategoryController')->names('admin.product-category')->except($defaultExcept)->middleware('role:super-admin');
+        Route::resource('product-category', 'ProductCategoryController')->names('admin.product-category')
+            ->except($defaultExcept)->middleware('role_or_permission:super-admin|product-category.*');
 
         /** Product */
         Route::resource('product', 'ProductController')->names('admin.product')->except($defaultExcept)->middleware('role_or_permission:super-admin|product.*');
 
         /** Shop Owner */
         Route::resource('shop-owner', 'ShopOwnerController')->names('admin.shop-owner')->except($defaultExcept)->middleware('role:super-admin');
-
 
 //        Route::post('shop-owner/{token}/reset-password', 'ShopOwnerController@resetPassword');
         // TODO: đem route đổi mật khẩu shop owner qua module ShopOwner

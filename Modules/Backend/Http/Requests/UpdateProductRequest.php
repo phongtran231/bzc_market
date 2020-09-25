@@ -20,27 +20,28 @@ class UpdateProductRequest extends FormRequest
             ],
             "parent_id" => [
                 "numeric",
-                "exists:products,parent_id"
+                "exists:products,parent_id",
             ],
             "title" => [
-                "string"
+                "string",
+                "unique:products,title," . request('product'). ",id",
             ],
             "des" => [
-                "string"
+                "string",
             ],
             "sku" => [
                 "required",
                 "string",
-                "unique:products,sku," . request('product') . ",id"
+                "unique:products,sku," . request('product') . ",id",
             ],
             "price" => [
                 "numeric",
             ],
             "image" => [
-                "string"
+                "string",
             ],
             "content" => [
-                "string"
+                "string",
             ]
         ];
     }

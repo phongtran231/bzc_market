@@ -60,4 +60,6 @@ abstract class BaseService implements BaseServiceInterface
     {
         return $this->_data;
     }
+
+    abstract protected function _setRelation(array $with = null);
 }

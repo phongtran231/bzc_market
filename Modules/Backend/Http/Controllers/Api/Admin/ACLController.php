@@ -5,6 +5,7 @@ namespace Modules\Backend\Http\Controllers\Api\Admin;
 use App\Models\Admin;
 use Illuminate\Http\Request;
 use Modules\Backend\Http\Controllers\Api\ApiAbstractController;
+use Modules\Backend\Http\Requests\SetRoleForAdminRequest;
 use Modules\Backend\Services\ACL\ACLServiceInterface;
 
 class ACLController extends ApiAbstractController
@@ -49,6 +50,16 @@ class ACLController extends ApiAbstractController
     public function createPermission(Request $request)
     {
         $response = $this->_ACLService->createPermission($request->input());
+        return $this->_returnResponse($response);
+    }
+
+    /**
+     * @param SetRoleForAdminRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function setRoleForAdmin(SetRoleForAdminRequest $request)
+    {
+        $response = $this->_ACLService->setRoleForAdmin($request->input());
         return $this->_returnResponse($response);
     }
 }
