@@ -15,6 +15,11 @@ class ProductCategory extends Model
         'id'
     ];
 
+    public function productAttributeGroups()
+    {
+        return $this->belongsToMany(ProductAttributeGroup::class, ProductAttributeGroupMapping::TABLE, 'product_category_id', 'product_attribute_group_id');
+    }
+
     protected static function boot()
     {
         static::saved(function ($item) {

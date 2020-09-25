@@ -17,11 +17,11 @@ class StoreProductCategoryRequest extends FormRequest
         return [
             'title' => [
                 'required',
-                'unique:product_categories,title',
             ],
             'cat_name' => [
-                'required_if:parent_id,0'
+                'required_if:parent_id,0',
             ],
+            'parent_id' => 'required',
         ];
     }
 
@@ -29,8 +29,8 @@ class StoreProductCategoryRequest extends FormRequest
     {
         return [
             'title.required' => 'Tiêu đề không được để trống',
-            'title.unique' => 'Tiêu đề đã tồn tại',
             'cat_name.required_if' => 'Tên tiêu đề không được để trống',
+            'parent_id' => 'Loại menu không được để trống'
         ];
     }
 }

@@ -15,11 +15,14 @@ class CreateProductsTable extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
+            $table->uuid('uuid')->unique();
+            $table->string('type')->nullable()->default('simple');
             $table->bigInteger('parent_id')->nullable()->index()->default(0);
-            $table->string('title');
+            $table->string('title')->unique();
             $table->string('des')->nullable();
             $table->string('sku', 100)->unique();
-            $table->float('price', 20, 3)->nullable()->default(0)->index();
+            $table->integer('price')->nullable()->default(0)->index();
+            $table->string('image')->nullable();
             $table->text('content')->nullable();
             $table->timestamps();
         });

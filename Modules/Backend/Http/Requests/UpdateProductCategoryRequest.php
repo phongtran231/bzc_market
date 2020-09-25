@@ -5,34 +5,26 @@ namespace Modules\Backend\Http\Requests;
 use App\Models\Admin;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateCoreConfigRequest extends FormRequest
+class UpdateProductCategoryRequest extends FormRequest
 {
-
-    /**
-     * @return bool
-     */
-    public function authorize(): bool
+    public function authorize()
     {
         return auth(Admin::GUARD_NAME)->check();
     }
 
-    /**
-     * @return array
-     */
     public function rules(): array
     {
         return [
-            'value' => 'required',
+            'title' => [
+                'required',
+            ],
         ];
     }
 
-    /**
-     * @return array
-     */
     public function messages(): array
     {
         return [
-            'value.required' => 'Thiếu giá trị cấu hình',
+            'title.required' => 'Tiêu đề không được để trống',
         ];
     }
 }
